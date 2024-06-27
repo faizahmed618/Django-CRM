@@ -22,6 +22,9 @@ class Agent(models.Model):
     def __str__(self):
         return self.firstName
     
+    def __del__(self):
+        return f"{self.firstName} is deleted"
+    
 class Lead(models.Model):
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=20)
