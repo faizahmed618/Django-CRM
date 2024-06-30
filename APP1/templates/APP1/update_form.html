@@ -6,8 +6,7 @@
     <title>Form</title>
   </head>
   <body>
-    <h1>Create New Lead</h1>
-
+    <h1>Update Lead {{lead.firstName}} {{lead.lastName}}</h1>
     <form method="post">
       {% csrf_token %} {{form.as_p}}
       <button type="submit">Submit Form</button>
