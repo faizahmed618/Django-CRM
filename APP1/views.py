@@ -12,9 +12,10 @@ def leads(request):
     data = { "leads": leads}
     return render(request, "APP1/leads.html", context = data)
 
-def leads_detail(request, pk):
-    leads = models.Lead.objects.get(id=pk)
-    data = { "leads": leads}
+def leads_detail(request, key):
+    leads = models.Lead.objects.get(id=key)
+    data = { "leads": leads,
+             "test": key}
     return render(request, "APP1/leads_details.html", context = data)
 
 def new_lead(request):
@@ -30,6 +31,7 @@ def new_lead(request):
     return render(request, "APP1/create_form.html", context = data)
 
 # the below function is same but using normal form.
+
 # def new_lead(request):
 #     form = forms.create_form()
 #     if request.method == "POST":
@@ -62,6 +64,8 @@ def update_lead(request, pk):
             "lead": lead}
     return render(request, "APP1/update_form.html", context = data)
 
+# below function is same as above about updating
+
 # def update_lead(request, pk):
 #     lead = models.Lead.objects.get(id=pk)
 #     form = forms.create_form()
@@ -77,4 +81,9 @@ def update_lead(request, pk):
 #     data = {"form": form,
 #             "lead": lead}
 #     return render(request, "APP1/update_form.html", context = data)
+
+def delete_lead(request, pk):
+    lead = models.Lead.objects.get(id=pk)
+    lead.delete()
+    return redirect("/APP1/leads")
         

@@ -4,47 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leads Details</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-        background-color: #f4f4f4;
-      }
-
-      .styled-list {
-        list-style: none;
-        padding-left: 0;
-      }
-
-      .styled-list li {
-        background: #fff;
-        margin: 5px 0;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        position: relative;
-        transition: all 0.3s ease;
-      }
-
-      .styled-list li:hover {
-        background: #f0f0f0;
-      }
-
-      .styled-list li::before {
-        content: "\2022";
-        color: #ff6347;
-        font-weight: bold;
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em;
-      }
-
-      .styled-list ul {
-        padding-left: 20px;
-      }
-    </style>
   </head>
   <body>
     <a href="/APP1/leads">Go Back to Leads</a>
@@ -52,5 +11,9 @@
     <h1>This is our Lead {{leads.firstName}} {{leads.lastName}}</h1>
     <p>Age is {{leads.age}}</p>
     <p>Agent is {{leads.agent.firstName}} {{leads.agent.lastName}}</p>
+    <p>The Value is {{test}}</p>
+    <hr />
+    <a href="/APP1/leads_details/{{leads.id}}/update">Update</a>
+    <a href="/APP1/leads_details/{{leads.id}}/delete">Delete</a>
   </body>
 </html>
