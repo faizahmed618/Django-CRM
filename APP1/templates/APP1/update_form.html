@@ -1,15 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form</title>
-  </head>
-  <body>
-    <h1>Update Lead {{lead.firstName}} {{lead.lastName}}</h1>
-    <form method="post">
-      {% csrf_token %} {{form.as_p}}
-      <button type="submit">Submit Form</button>
-    </form>
-  </body>
-</html>
+{% extends "base.html" %} {% block content%}
+
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">LEAD</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
+          {{leads.firstName}} {{leads.lastName}}
+        </h1>
+        <div class="flex mb-4">
+          <a href="{% url "APP1NameSpace:lead_details" lead.id%}"
+          class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1"
+            >Description</a
+          >
+          <a
+            href="/APP1/leads_details/{{lead.id}}/delete"
+            class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1"
+            >Delete</a
+          >
+          <a
+            href="{% url "APP1NameSpace:update_lead" lead.id%}"
+            class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
+            >Update</a
+          >
+        </div>
+        <form method="post">
+          {% csrf_token %} {{form.as_p}}
+          <button type="submit">Submit Form</button>
+        </form>
+        <a href="/APP1/leads_details/{{lead.id}}/delete" class="w-1/2 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+          Delete
+        </a>
+      </div>
+      <img
+        alt="ecommerce"
+        class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+        src="https://dummyimage.com/400x400"
+      />
+    </div>
+  </div>
+</section>
+
+{% endblock %}

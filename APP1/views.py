@@ -3,6 +3,9 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models, forms
 
+def landing(request):
+    return render(request, "landing.html")
+
 # Create your views here.
 def login(request):
     return render(request, "APP1/login.html")

@@ -1,61 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leads Details</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-        background-color: #f4f4f4;
-      }
+{% extends "base.html" %} {% block content %}
 
-      .styled-list {
-        list-style: none;
-        padding-left: 0;
-      }
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto flex flex-wrap">
+    <div
+      class="w-full mb-6 py-6 flex justify-between items-center border-between border-gray-200"
+    >
+      <div>
+        <h1 class="text-4xl text-gray-800">Leads</h1>
+      </div>
 
-      .styled-list li {
-        background: #fff;
-        margin: 5px 0;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        position: relative;
-        transition: all 0.3s ease;
-      }
-
-      .styled-list li:hover {
-        background: #f0f0f0;
-      }
-
-      .styled-list li::before {
-        content: "\2022";
-        color: #ff6347;
-        font-weight: bold;
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em;
-      }
-
-      .styled-list ul {
-        padding-left: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <a href="/APP1/create_lead">Create a New Lead</a>
+      <div>
+        <a class="text-gray-500 hover:text-blue-500" href="/APP1/create_lead"
+          >Create a New Lead</a
+        >
+      </div>
+    </div>
     <hr />
-    <h1>This is all our Leads</h1>
-    <ul class="styled-list">
+    <div class="flex flex-wrap -m-4">
       {% for lead in leads%}
-      <li>
-        <a href="/APP1/leads_details/{{lead.id}}">{{lead.firstName}} </a>
-      </li>
+      <div class="p-4 lg:w-1/2 md:w-full">
+        <div
+          class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col"
+        >
+          <div
+            class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
+          >
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+            >
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <div class="flex-grow">
+            <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+              {{lead.firstName}} {{lead.lastName}}
+            </h2>
+            <p class="leading-relaxed text-base">
+              Blue bottle crucifix vinyl post-ironic four dollar toast vegan
+              taxidermy. Gastropub indxgo juice poutine.
+            </p>
+            <a
+              href="/APP1/leads_details/{{lead.id}}"
+              class="mt-3 text-indigo-500 inline-flex items-center"
+            >
+              View this Lead
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-4 h-4 ml-2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
       {% endfor %}
-    </ul>
-  </body>
-</html>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
