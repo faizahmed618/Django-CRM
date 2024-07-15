@@ -1,25 +1,44 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models, forms
+
+class Landingpageview(generic.TemplateView):
+    template_name = "landing.html"
 
 def landing(request):
     return render(request, "landing.html")
 
-# Create your views here.
 def login(request):
     return render(request, "APP1/login.html")
+
+class Leadlistview(generic.ListView):
+    template_name = "APP1/leads.html"
+    queryset = models.Lead.objects.all()
+    context_object_name = "leads"
 
 def leads(request):
     leads = models.Lead.objects.all()
     data = { "leads": leads}
     return render(request, "APP1/leads.html", context = data)
 
+class Leaddetailview(generic.DetailView):
+    template_name = "APP1/leads_details.html"
+    queryset = models.Lead.objects.all()
+    context_object_name = "leads"
+
 def leads_detail(request, key):
     leads = models.Lead.objects.get(id=key)
     data = { "leads": leads,
              "test": key}
     return render(request, "APP1/leads_details.html", context = data)
+
+class Leadcreateview(generic.CreateView):
+    template_name = "APP1/create_form.html"
+    form_class = forms.create_form_model
+    def get_success_url(self):
+        return reverse("APP1NameSpace:leads")
 
 def new_lead(request):
     form1 = forms.create_form_model()
@@ -55,6 +74,14 @@ def new_lead(request):
 #     data = {"form": form}
 #     return render(request, "APP1/create_form.html", context = data)
 
+class Leadupdateview(generic.UpdateView):
+    queryset = models.Lead.objects.all()
+    form_class = forms.create_form_model
+    template_name = "APP1/update_form.html"
+    def get_success_url(self):
+        return reverse("APP1NameSpace:leads")
+        # return redirect("/APP1/leads") this doesnt work in class
+
 def update_lead(request, pk):
     lead = models.Lead.objects.get(id=pk)
     form = forms.create_form_model(instance=lead)
@@ -84,6 +111,12 @@ def update_lead(request, pk):
 #     data = {"form": form,
 #             "lead": lead}
 #     return render(request, "APP1/update_form.html", context = data)
+
+class Leaddeleteview(generic.DeleteView):
+    template_name = "APP1/delete_form.html"
+    queryset = models.Lead.objects.all()
+    def get_success_url(self):
+        return reverse("APP1NameSpace:leads")
 
 def delete_lead(request, pk):
     lead = models.Lead.objects.get(id=pk)
