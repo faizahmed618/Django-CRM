@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.mail import send_mail
 # from django.contrib.auth.forms import UserCreationForm #Not using this
-from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic, View
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models, forms
 
@@ -15,13 +16,17 @@ class Signupview(generic.CreateView):
 class Landingpageview(generic.TemplateView):
     template_name = "landing.html"
 
+class Land(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, "landing.html")
+    
 def landing(request):
     return render(request, "landing.html")
 
 def login(request):
     return render(request, "APP1/login.html")
 
-class Leadlistview(generic.ListView):
+class Leadlistview(LoginRequiredMixin, generic.ListView):
     template_name = "APP1/leads.html"
     queryset = models.Lead.objects.all()
     context_object_name = "leads"
@@ -31,7 +36,7 @@ def leads(request):
     data = { "leads": leads}
     return render(request, "APP1/leads.html", context = data)
 
-class Leaddetailview(generic.DetailView):
+class Leaddetailview(LoginRequiredMixin, generic.DetailView):
     template_name = "APP1/leads_details.html"
     queryset = models.Lead.objects.all()
     context_object_name = "leads"
@@ -42,7 +47,7 @@ def leads_detail(request, key):
              "test": key}
     return render(request, "APP1/leads_details.html", context = data)
 
-class Leadcreateview(generic.CreateView):
+class Leadcreateview(LoginRequiredMixin, generic.CreateView):
     template_name = "APP1/create_form.html"
     form_class = forms.create_form_model
     def get_success_url(self):
@@ -54,7 +59,6 @@ class Leadcreateview(generic.CreateView):
                   from_email="test@test.com",
                   recipient_list=["test2@test.com"])
         return super(Leadcreateview,self).form_valid(form)
-    
 
 def new_lead(request):
     form1 = forms.create_form_model()
@@ -90,7 +94,7 @@ def new_lead(request):
 #     data = {"form": form}
 #     return render(request, "APP1/create_form.html", context = data)
 
-class Leadupdateview(generic.UpdateView):
+class Leadupdateview(LoginRequiredMixin, generic.UpdateView):
     queryset = models.Lead.objects.all()
     form_class = forms.create_form_model
     template_name = "APP1/update_form.html"
@@ -128,7 +132,7 @@ def update_lead(request, pk):
 #             "lead": lead}
 #     return render(request, "APP1/update_form.html", context = data)
 
-class Leaddeleteview(generic.DeleteView):
+class Leaddeleteview(LoginRequiredMixin, generic.DeleteView):
     template_name = "APP1/delete_form.html"
     queryset = models.Lead.objects.all()
     def get_success_url(self):
@@ -138,4 +142,3 @@ def delete_lead(request, pk):
     lead = models.Lead.objects.get(id=pk)
     lead.delete()
     return redirect("/APP1/leads")
-        

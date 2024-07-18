@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     
     #custom APPs
-    "APP1.apps.App1Config"
+    "APP1.apps.App1Config",
+    "Agent.apps.AgentConfig"
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,5 @@ STATIC_ROOT = "static_root"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = "/APP1/leads/"
+
+AUTH_USER_MODEL = "APP1.User"
